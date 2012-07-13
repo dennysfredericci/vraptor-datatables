@@ -1,6 +1,6 @@
 package br.com.fredericci.datatables.view;
 
-import static br.com.caelum.vraptor.view.Results.json;
+import static br.com.caelum.vraptor.view.Results.representation;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.fredericci.datatables.Page;
@@ -18,7 +18,7 @@ public class PagingResults implements PagingResult {
 	@Override
 	public void from(Page<?> page) {
 		DataTable dataTable = new DataTable(page);
-		this.result.use(json()).withoutRoot().from(dataTable).include("aaData").serialize();
+		this.result.use(representation()).from(dataTable).include("aaData").recursive().serialize();
 	}
 
 	public static Class<PagingResults> dataTablesPaging() {

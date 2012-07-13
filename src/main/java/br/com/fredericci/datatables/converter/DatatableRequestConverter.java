@@ -1,5 +1,7 @@
 package br.com.fredericci.datatables.converter;
 
+import static com.google.common.base.Objects.firstNonNull;
+
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +24,11 @@ public class DatatableRequestConverter implements Converter<PageRequest> {
 	@Override
 	public PageRequest convert(String value, Class<? extends PageRequest> type, ResourceBundle bundle) {
 
-		Integer start = Integer.valueOf(this.request.getParameter("iDisplayStart"));
-		Integer size = Integer.valueOf(this.request.getParameter("iDisplayLength"));
+		String iDisplayStart = this.request.getParameter("iDisplayStart");
+		String iDisplayLength = this.request.getParameter("iDisplayLength");
+
+		Integer start = Integer.valueOf(firstNonNull(iDisplayStart, "0"));
+		Integer size = Integer.valueOf(firstNonNull(iDisplayLength, "10"));
 		String search = this.request.getParameter("sSearch");
 
 		PageRequest pageRequest = new PageRequest();
